@@ -221,5 +221,8 @@ var dataUp ={flag:flgchek};
 		})
 
 
+
+
+		
 };
 

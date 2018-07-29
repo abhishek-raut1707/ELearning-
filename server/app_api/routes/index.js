@@ -18,12 +18,16 @@ var ctrlVideo = require('../controllers/video');
 var ctrlBookmark = require('../controllers/bookmarkExp');
 var ctrllikeDislik = require('../controllers/like_dislike');
 
-
+//////////////////////////////////////////////////////
+// Changes 
+var ctrlConfluence = require('../controllers/confluence/Parentconfluence');
 
 //Expression
 router.post('/add_expression',ctrlExpression.addExpression);
-router.post('/add_expression_from_confluence',ctrlExpression.addExpressionFroMConfluence);
+// router.post('/add_expression_from_confluence',ctrlExpression.ctrlConfluence);
 
+
+router.get('/getAll', ctrlConfluence.ParseConfluence);
 
 router.get('/get_expression',ctrlExpression.getExpression);
 

@@ -17,7 +17,7 @@ export class ContentFindComponent implements OnInit {
   }
 
   parseContent(event: any) {
-    this.apiServ.getAllExpPageID(this.contentID)
+    this.apiServ.getAllExpPageID()
     .subscribe(data => {
       console.log(data);
     });

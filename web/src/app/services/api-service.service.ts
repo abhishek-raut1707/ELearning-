@@ -10,8 +10,8 @@ export class ApiServiceService {
   constructor(private _http: HttpClient) { }
 
 
-  getAllExpPageID(contentID: any) {
-    return this._http.post(environment.baseurl + '/add_expression_from_confluence', contentID);
+  getAllExpPageID() {
+    return this._http.get(environment.baseurl + '/getAll');
   }
 
   postUploadImage() {
