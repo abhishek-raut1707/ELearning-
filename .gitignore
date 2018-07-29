@@ -1,4 +1,4 @@
 server/node_modules
 server/keys
 web/node_modules
-server/app_api/config/
+server/app_api/config/passport.js
