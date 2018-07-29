@@ -1,0 +1,59 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark black">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" routerLink="/home" > English Logica </a></mdb-navbar-brand>
+
+    <!-- Collapsible content -->
+    <links>
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link waves-light" style="padding-left: 5px;" mdbWavesEffect routerLink="/home"> Home <span class="sr-only">(current)</span></a>
+            </li>
+
+            <!-- Dropdown -->
+            <li class="nav-item dropdown" style="padding-left: 5px;" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                Expressions <span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/expressions/content-find"> <span><i class="fa fa-search"></i></span> &nbsp; Find Expressions </a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/expressions/get-all-expressions"> <span><i class="fa fa-list-ul"></i></span> &nbsp;List all Expressions</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" style="padding-left: 5px;" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                Comics <span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/comics/view-comics"><span><i class="fa fa-image"></i></span> &nbsp; View Comics  </a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/comics/upload-comics"><span><i class="fa fa-upload"></i></span> &nbsp; Upload Comics</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" style="padding-left: 5px;"dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                Tenses <span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/home"> Verb Tenses  </a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/home"> Conditional Tenses </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" style="padding-left: 5px;" mdbWavesEffect routerLink="/faqs"> FAQs </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav right">
+                <li class="nav-item dropdown" style="padding-left: 5px;"dropdown>
+                        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                        My Account <span class="caret"></span></a>
+                        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                            <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/auth/login"> <span><i class="fa fa-sign-in"></i></span> &nbsp; Login  </a>
+                            <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/auth/signup"><span><i class="fa fa-user-plus"></i></span> &nbsp; Signup</a>
+                        </div>
+                    </li>
+        </ul>
+        <!-- Links -->
+    </links>
+    <!-- Collapsible content -->
+</mdb-navbar>
+<!--/.Navbar-->

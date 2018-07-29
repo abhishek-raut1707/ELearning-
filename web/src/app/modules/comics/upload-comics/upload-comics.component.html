@@ -1,0 +1,153 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+    <form [formGroup]="htmlInputFromComic" class="text-center border border-light p-5" enctype="multipart/form-data">
+      <div class="md-form form-sm">
+          <input type="text" id="inputSMEx" class="form-control form-control-sm">
+          <label for="inputSMEx">Small input</label>
+      </div>
+      
+    </form>
+  </div>
+  <div class="col-md-6"></div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+  <hr>
+      <form [formGroup]="htmlInputFromComic" enctype="multipart/form-data">
+        <div class="form-group">
+          <input type="text" autocomplete="title" class="form-control form-control-sm"  formControlName="title" placeholder="Enter Comics title" >         
+        </div>
+        <div class="form-group">
+          <input type="text" autocomplete="name" class="form-control form-control-sm" formControlName="plan" placeholder="Enter Plan">
+        </div>
+        <br>
+      </form>
+        <div class="file">
+          <input type="file" (change)="handleFileUploadEvent($event)" multiple accept="image/*">
+        </div> 
+    </div>
+<br>
+  <div class="container" *ngFor="let element of uploadedPanelsArr">
+    <div class="thumbnail" data-toggle="modal" data-target="#myModal" (click)="currentImagePointer(element)" > {{element.name}} </div>
+  </div>
+
+<br><hr>
+<button type="submit" (click)="submitComic($event)"> Submit Comic </button>
+
+<!-- Modal -->
+<div [hidden]="!showModal" id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+          <form [formGroup]="htmlInputFromPanel">
+            <div class="form-group">
+                <label for="serial_no"> Serial No.</label>
+                <input type="text" class="form-control form-control-sm" formControlName="serial_no">
+            </div>
+            <div class="form-group">
+              <label for="alt"> Alternate Name </label>
+                <input type="text" class="form-control form-control-sm" formControlName="alt">
+            </div>
+            <div class="form-group">
+              <label for="title"> Title </label>
+                <input type="text" class="form-control form-control-sm" formControlName="title">
+            </div>
+            <div class="form-group">
+              <label for="img_url"> Image URL </label>
+                <input type="text" class="form-control form-control-sm" formControlName="image_url">
+            </div>
+            <div class="form-group">
+              <label for="description"> Description </label>
+                <input type="text" class="form-control form-control-sm" formControlName="description">
+            </div>
+          <button class="btn btn-default" (click)="addPanelMetadata($event)"> Save </button>
+          <button class="btn btn-default" data-toggle="modal" data-target="#myModalExp" > Next </button>
+        </form>
+        </div>
+
+        <div id="myModalExp" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+                <form [formGroup]="htmlInputFromExp">
+                  <div class="form-group">
+                      <label for="expstring"> Expression String </label>
+                      <input type="text" class="form-control form-control-sm" formControlName="expstring">
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col=sm-6">
+                        <button class="btn btn-default" (click)="checkEXPID($event)" > Check </button>
+                    </div>
+                    <div class="col=sm-6"></div>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="expID"> Select Exp ID</label>
+                    <select name="expID" id="expID" formControlName="expID">
+                      <option *ngFor="let element of expressionData" [value]="element.expID">
+                        {{element.expID}}
+                      </option>
+                    </select>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="contextID"> Select Context ID</label>
+                    <select name="contextID" id="contextID" formControlName="contextID">
+                      <option *ngFor="let element of expressionData" [value]="element.contextID">
+                        {{element.contextID}}
+                      </option>
+                    </select>
+                  </div>  
+                </form>
+                <br>
+                <br>
+                <br>
+                <br>
+                
+                <button class="btn btn-default" (click)="addpanelExpData($event)"> Publish Panel </button>
+              </div>
+  
+    </div>
+  </div>
+  <br>
+  <hr>
