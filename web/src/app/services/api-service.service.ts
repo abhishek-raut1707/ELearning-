@@ -7,19 +7,27 @@ import { environment } from '../../environments/environment';
 })
 export class ApiServiceService {
 
+  baseUrl = 'http://localhost:3000';
   constructor(private _http: HttpClient) { }
 
 
   getAllExpPageID(getContent: any) {
-    return this._http.post(environment.baseurl + '/all_expss', getContent);
+    console.log(getContent);
+
+    return this._http.post(this.baseUrl + '/all_expss', getContent);
   }
 
-  postUploadImage() {
-
+  postUploadImage(comicData: any) {
+    console.log('comicData service', comicData);
+    return this._http.post(this.baseUrl + '/comic', comicData);
   }
 
   getExpID(expString: string) {
-    return this._http.post(environment.baseurl + '/getExpID', expString);
+    return this._http.post(this.baseUrl + '/getExpID', expString);
   }
 
+
+  testImg(data) {
+    return this._http.post(this.baseUrl + '/testImg', data);
+  }
 }

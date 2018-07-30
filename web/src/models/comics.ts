@@ -1,9 +1,9 @@
-import { Panel } from "./panel";
+import { Panel } from './panel';
 
 export class Comics {
     title: string;
     plan: Plan[] = [];
-    panel_data: Panel[] = [];
+    panel_data = [];
     active_flag: boolean;
 }
 

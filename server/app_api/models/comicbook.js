@@ -11,9 +11,9 @@ var comicbook=new mongoose.Schema({
 		alt :String,
 		title:String,
 		exp_data:[{
-		expstring:String,
-		ExpID:{type:mongoose.Schema.Types.ObjectId,ref:'Expression'},
-		ContextID:{type:mongoose.Schema.Types.ObjectId,ref:'Expression_Context'}
+			expstring:String,
+			ExpID:{type:mongoose.Schema.Types.ObjectId,ref:'Expression'},
+			ContextID:{type:mongoose.Schema.Types.ObjectId,ref:'Expression_Context'}
 		}],
 		description:String
 	}],	

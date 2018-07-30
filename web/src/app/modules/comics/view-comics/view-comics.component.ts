@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './view-comics.component.html',
   styleUrls: ['./view-comics.component.scss']
 })
-export class ViewComicsComponent implements OnInit {
+export class ViewComicsComponent {
 
-  constructor() { }
-
-  ngOnInit() {
   }
 
-}

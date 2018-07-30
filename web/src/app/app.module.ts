@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { LayoutModule } from './layouts/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 
+import { ApiServiceService } from '../app/services/api-service.service';
 
 @NgModule({
   declarations: [

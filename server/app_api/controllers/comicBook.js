@@ -53,21 +53,27 @@ console.log('qury ======'+JSON.stringify(stringTxt));
 
 module.exports.addComic=function(req,res){
 
-    var data=req.body;
-
-	var comic=new ComicBook(data);
+	console.log(req.files);
+	console.log(req.body);
+	
+	// var comic = new ComicBook();
+	// comic.title = req.body.comic_title;
+	// comic.plan = req.body.comic_plan;
+	// comic.panel_data.title = req.body.title;
+	// comic.panel_data.serial_no
+	
    
-	comic.save(function(err,docsId){
-		if(err) 
-		res.json(err);
-		if(!err){
-                res.status(200);
-                res.json({
-                "token" : "Comic Book Inserted Successfully ...."
-                });
-            }
+	// comic.save(function(err,docsId){
+	// 	if(err) 
+	// 	res.json(err);
+	// 	if(!err){
+    //             res.status(200);
+    //             res.json({
+    //             "token" : "Comic Book Inserted Successfully ...."
+    //             });
+    //         }
 
-	});
+	// });
 	
 
 };
@@ -177,6 +183,15 @@ module.exports.getComicbyExpID=function(req,res){
 		*/
 
 };
+
+module.exports.testImg = function(req, res)
+{
+	console.log(req.body);
+
+	fs.writeFile('image.jpg', req.body.image, {encoding: 'base64'}, function(err) {
+		console.log('File Created');
+	});
+}
 
 
 

@@ -1,4 +1,5 @@
 var express = require('express');
+var multiparty = require('connect-multiparty');
 var router = express.Router();
 var jwt = require('express-jwt');
 var auth = jwt({
@@ -25,6 +26,7 @@ var ctrlConfluence = require('../controllers/confluence/Parentconfluence');
 //Expression
 router.post('/add_expression',ctrlExpression.addExpression);
 // router.post('/add_expression_from_confluence',ctrlExpression.ctrlConfluence);
+
 
 
 router.post('/all_expss', ctrlConfluence.ParseConfluence);
@@ -65,7 +67,7 @@ router.delete('/similarExp/:similID',ctrlsimilarExp.DeletesimilarEXpByID);
 
 
 //Comic Book
-router.post('/comic',ctrlComic.addComic);
+router.post('/comic', multiparty, ctrlComic.addComic);
 router.get('/comic',ctrlComic.getComic);
 router.get('/comic/:comicID',ctrlComic.getComicByID);
 router.put('/comic/:comicID',ctrlComic.EditComic);
@@ -123,5 +125,9 @@ router.delete('/blacklist_exp/:bookMrkID',ctrlBookmark.DeleteBlackListExpByID);
 router.post('/alike',ctrllikeDislik.addLike);
 
 
+
+// TESTING 
+
+router.post('/testImg', ctrlComic.testImg);
 
 module.exports = router;

@@ -25,7 +25,8 @@ export class UploadComicsComponent implements OnInit {
   recIdArr: any = [];
   recId: any;
   image;
-  expressionData: ExpressionData[] = [{expID: 'Put together', contextID:'put something together'}, {expID: 'build together', contextID:'build something together'}];
+  url;
+  expressionData: ExpressionData[] = [];
   showModal: boolean;
   constructor(
   private apiServ: ApiServiceService,
@@ -38,7 +39,7 @@ export class UploadComicsComponent implements OnInit {
     this.createExpForm();
   }
   ngOnInit() {
-    this.showModal = true
+    this.showModal = true;
    }
 
   createComicForm() {
@@ -46,7 +47,7 @@ export class UploadComicsComponent implements OnInit {
       title: ['', Validators],
       plan: ['', Validators],
     });
-  } 
+  }
 
 
   createPanelForm() {
@@ -61,10 +62,10 @@ export class UploadComicsComponent implements OnInit {
 
   createExpForm() {
     this.htmlInputFromExp = this.fb.group({
-      expstring:['', Validators],
+      expstring: ['', Validators],
       expID: '',
       contextID: ''
-    })
+    });
   }
 
   handleFileUploadEvent(event: any) {
@@ -75,7 +76,15 @@ export class UploadComicsComponent implements OnInit {
       this.uploadedPanelsArr.push(image);
       this.toastr.success(' Successfully added ', image.name);
     }
-  }
+
+      // const reader = new FileReader();
+
+      // reader.onload = (event: ProgressEvent) => {
+      //   this.url = (<FileReader>event.target).result;
+      // };
+
+      // reader.readAsDataURL(event.target.files[0]);
+    }
 
 
 
@@ -84,61 +93,67 @@ export class UploadComicsComponent implements OnInit {
     this.apiServ.getExpID(expString)
     .subscribe(
       (data: any) => {
+
         this.expressionData.push(data);
       }
-    )
+    );
   }
 
 
-  currentImagePointer(value) {
-    this.currentImageValue = value;
-  }
-
-  addpanelExpData(event: any) {
-    const expData = new ExpData();
-      expData.expstring = this.htmlInputFromExp.value.expstring,
-      expData.ExpID = this.htmlInputFromExp.value.expID,
-      expData.ContentID = this.htmlInputFromExp.value.contextID
-
-      this.masterPanelData.exp_data.push(expData);
-      this.submitPanelData();
+  currentImagePointer(event: any, element) {
+    this.currentImageValue = element;
   }
 
 
   addPanelMetadata(event: any) {
-    
+
     this.masterPanelData.serial_no = this.htmlInputFromPanel.value.serial_no;
     this.masterPanelData.alt = this.htmlInputFromPanel.value.alt;
     this.masterPanelData.description = this.htmlInputFromPanel.value.description;
     this.masterPanelData.title = this.htmlInputFromPanel.value.title;
     this.masterPanelData.img_url = this.htmlInputFromPanel.value.img_url;
 
+    const imageFile = this.currentImageValue;
 
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onload = () => {
+      // const target = <any>event.target;
+      // const image = target.result;
+      // const parts = image.split(',');
+      // const base64 = parts[1];
+      console.log('base64 ', reader.result.split(',')[1]);
+
+
+    };
+  }
+
+
+  addpanelExpData(event: any) {
+    const expData = new ExpData();
+      expData.expstring = this.htmlInputFromExp.value.expstring;
+      expData.ExpID = this.htmlInputFromExp.value.expID;
+      expData.ContentID = this.htmlInputFromExp.value.contextID;
+
+      this.masterPanelData.exp_data.push(expData);
 
   }
-   
-  submitPanelData() {
-    const file = this.currentImageValue;
-    console.log('this.masterPanelData on panel submit all', this.masterPanelData);
-    const formData = new FormData();
-    formData.append('file', file, file.name);
 
-    // this.apiServ.postUploadImage(formdata).subscribe(
-    //   (data: any) => {
-    //     if (data) {
-    //       this.toastr.success(' The Panel is Uploaded with id : ' + data.id);
-    //       this.recId = data;
-    //       this.recIdArr.push(this.recId.id);
-    //       console.log(this.recId.id);
-
-    //     } else {
-    //       this.toastr.error(' Error in uploading the Comic panel');
-    //     }
-    //   }
-    // );
-  }
 
   submitComic(event: any) {
 
+    this.masterComicsData.title = this.htmlInputFromComic.value.title;
+    this.masterComicsData.plan = this.htmlInputFromComic.value.plan;
+    this.masterComicsData.panel_data.push(this.masterPanelData);
+
+    console.log('this.masterComicsData', this.masterComicsData);
+
+    this.apiServ.postUploadImage(this.masterComicsData)
+    .subscribe(
+      (data: any) => {
+        console.log(data);
+      }
+    );
   }
 }
+

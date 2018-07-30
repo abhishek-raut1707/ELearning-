@@ -4,7 +4,7 @@ import { UploadComicsComponent } from './upload-comics/upload-comics.component';
 import { ViewComicsComponent } from './view-comics/view-comics.component';
 
 const routes: Routes = [
-      
+
       {
         path: 'upload-comics',
         component: UploadComicsComponent

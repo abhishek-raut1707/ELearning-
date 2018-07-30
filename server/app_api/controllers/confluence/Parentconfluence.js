@@ -7,7 +7,7 @@ exports.ParseConfluence = function(req, res) {
 
 	if(req.body.name === 'confluence') {
 			// Parent
-		var url = 'https://englishlogica.atlassian.net/wiki/rest/api/content/32960/descendant/page?limit=7&start=0';
+		var url = 'https://englishlogica.atlassian.net/wiki/rest/api/content/32960/descendant/page?limit=10&start=0';
 		axios({
 			method: 'get',
 			url,
