@@ -27,7 +27,7 @@ router.post('/add_expression',ctrlExpression.addExpression);
 // router.post('/add_expression_from_confluence',ctrlExpression.ctrlConfluence);
 
 
-router.get('/getAll', ctrlConfluence.ParseConfluence);
+router.post('/all_expss', ctrlConfluence.ParseConfluence);
 
 router.get('/get_expression',ctrlExpression.getExpression);
 

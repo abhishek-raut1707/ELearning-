@@ -9,7 +9,6 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { LayoutModule } from './layouts/layout.module';
 import { AppRoutingModule } from './app-routing.module';
-import { ApiServiceService } from './services/api-service.service';
 
 
 @NgModule({
@@ -25,7 +24,7 @@ import { ApiServiceService } from './services/api-service.service';
     LayoutModule,
     AppRoutingModule
   ],
-  providers: [ApiServiceService, ToastrService],
+  providers: [ ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

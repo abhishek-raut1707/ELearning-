@@ -1,9 +1,18 @@
+var confluence = require('confluence-api');
+var striptags = require('striptags');
+var mongoose = require('mongoose');
 
 
-module.exports.ContentData = function() {
+var ctrlExpressions = require('../expression');
+var Expression_Context = mongoose.model('Expression_Context');
+var Expression = mongoose.model('Expression');
+var contextData = [];
 
-    console.log('getData', value);
-    
+
+module.exports.ContentData = function(value, title) {
+
+	// console.log('getData', value.title);
+	
     var configAmogh = {
         username: "amogh.bhatnagar@sagacitysoftware.co.in",
         password: "Amo@saga@123",
@@ -12,10 +21,10 @@ module.exports.ContentData = function() {
     var Conf = new confluence(configAmogh);
 	// Content ID
     
-	Conf.getContentById(value, async function(err, data) {
+	Conf.getContentById(value.id, async function(err, data) {
 		if(err) {
 			console.log(err);
-			res.json({status: false});
+			// res.json({status: false});
 		}
 		if(data) {
 			// console.log("Data === ", data);
@@ -61,7 +70,19 @@ module.exports.ContentData = function() {
 				} else if(block2) {
 					//console.log('Block2 is present');
 				}
-				
+                
+                // //Level of 1
+				const Levelregex = /(L|l)evel\s*:\s*(.*)(M|m)eaning ID\s*:/gm;
+                const Level = Levelregex.exec(tab1);
+
+
+				if(Level === null) {
+                    var LevelTab1 = '';
+                } else {
+                    var LevelTab1 = Level[2];
+                }
+
+
 				// //Meaning ID of 1
 				const MeaningIDregex = /(M|m)eaning ID\s*:\s*(.*)\s*(S|s)tatus\s*:/gm;
 				const MeaningId = MeaningIDregex.exec(tab1);
@@ -134,17 +155,23 @@ module.exports.ContentData = function() {
 				var FurtherSuggTab1 = FurtherSugg[3];
 				
 
-				var Tab1Obj = {};
-				Tab1Obj.MeaningID = MeaningIDTab1;
-				Tab1Obj.Status = StatusTab1;
-				Tab1Obj.Meaning = MeaningTab1;
-				Tab1Obj.Notes = NotesTab1;
-				Tab1Obj.Popularity = PopularityTab1;
-				Tab1Obj.BWTM = BWTMTab1;
-				Tab1Obj.Examples = ExampleTab1;
-				Tab1Obj.FurtherSugg = FurtherSuggTab1;
+                var Tab1 = new Expression_Context();
+                Tab1.HTM = BWTMTab1.toString();
+                Tab1.examples = ExampleTab1.toString();
+                Tab1.popularity = PopularityTab1.toString();
+                Tab1.notes = NotesTab1.toString();
+                Tab1.Meaning_ID = MeaningIDTab1.toString();
+                Tab1.meaning = MeaningTab1.toString();
+                Tab1.level = LevelTab1.toString();
+                Tab1.active_flag = StatusTab1.toString();
+                Tab1.further_suggestion = FurtherSuggTab1.toString();
+                // console.log('Tab1', Tab1);
+                
 
-				console.log('Tab-1 Object  =====', Tab1Obj);
+
+				// console.log('Tab-1 Object  =====', Tab1Obj);
+
+                contextData.push(Tab1);
 
 			}
 			if(block1 && block2 === undefined) {
@@ -152,7 +179,19 @@ module.exports.ContentData = function() {
 				var splitFromIndex = dataContent.indexOf(matches[1]);
 				var tab2 = dataContent.substring(splitFromIndex);
 				//console.log(tab2);
-				
+                
+                 // //Level of 2
+				const Levelregex = /(L|l)evel\s*:\s*(.*)(M|m)eaning ID\s*:/gm;
+                const Level = Levelregex.exec(tab1);
+
+
+				if(Level === null) {
+                    var LevelTab2 = '';
+                } else {
+                    var LevelTab2 = Level[2];
+                }
+
+
 				// //Meaning ID of 1
 				const MeaningIDregex = /(M|m)eaning ID\s*:\s*(.*)\s*(S|s)tatus\s*:/gm;
 				const MeaningId = MeaningIDregex.exec(tab2);
@@ -201,28 +240,151 @@ module.exports.ContentData = function() {
 				const FurtherSugg = FurtherSuggregex.exec(tab2);
 				//console.log('FurtherSugg[3] ===', FurtherSugg[3]);
 				var FurtherSuggTab2 = FurtherSugg[3];
+                
+
+                var Tab2 = new Expression_Context();
+                Tab2.HTM = BWTMTab2.toString();
+                Tab2.examples = ExampleTab2.toString();
+                Tab2.popularity = PopularityTab2.toString();
+                Tab2.notes = NotesTab2.toString();
+                Tab2.Meaning_ID = MeaningIDTab2.toString();
+                Tab2.meaning = MeaningTab2.toString();
+                Tab2.level = LevelTab2.toString();
+                Tab2.active_flag = StatusTab2.toString();
+                Tab2.further_suggestion = FurtherSuggTab2.toString();
+				// console.log('Tab-2 Object ====', Tab2Obj);
 				
-
-				var Tab2Obj = {};
-				Tab2Obj.MeaningID = MeaningIDTab2;
-				Tab2Obj.Status = StatusTab2;
-				Tab2Obj.Meaning = MeaningTab2;
-				Tab2Obj.Notes = NotesTab2;
-				Tab2Obj.Popularity = PopularityTab2;
-				Tab2Obj.BWTM = BWTMTab2;
-				Tab2Obj.Examples = ExampleTab2;
-				Tab2Obj.FurtherSugg = FurtherSuggTab2;
-
-				console.log('Tab-2 Object ====', Tab2Obj);
-				
-
+                contextData.push(Tab2);
 				
 			}
 
+			ctrlExpressions.addExpressionFroMConfluence(contextData, title)
+			contextData = [];
+			
 		}
+	
+	
+	// 	var title = value.title;
+
+	// 	Expression.find({name: title}, function(err, data) {
+	// 		if(err) {
+	// 			console.log(err);
+				
+	// 		} else if(data.length < 0) {
+
+	// 			var exp= new Expression();
+	// 			exp.name = title;
 
 
-				// subAry.title = title;
+	// 			exp.save(function(err, docID) {
+	// 				if(err) {
+	// 					console.log(err);
+						
+	// 				}else if(!err) 
+	// 				{
+	// 					for(var i = 0; i < contextData.length; i++) {
+	// 						var data = contextData[i];
+
+	// 						save_context(data, docID);
+	// 					}
+	// 				}
+	// 			});
+	// 		}
+	// 	});
+	// 	function save_context(data, ExpID) {
+	// 		var expC = new Expression_Context();
+	// 		expC.ExpID = ExpID;
+	// 		expc.examples = data.examples;
+	// 		expc.level = data.level;
+	// 		expc.further_suggestion = data.further_suggestion;
+	// 		expc.popularity = data.popularity;
+	// 		expc.notes = data.notes;
+	// 		expc.meaning = data.meaning;
+	// 		expc.active_flag = data.active_flag;
+	// 		expc.HTM = data.HTM;
+	// 		expc.Meaning_ID = data.Meaning_ID;
+
+	// 		console.log('expC', expC);
+			
+	// 		expC.save(function(err, docID) {
+	// 			if(err) {
+	// 				console.log(err);
+	// 			} else if(docID) {
+	// 				console.log('Successfully saved data ', docID);
+	// 			}
+		
+	// });
+	// }
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// subAry.title = title;
 		// 		subAry.data.push(Tab1Obj);
 		// 		console.log('subAry SSSSSSSSSSSSSSS ', subAry);
 				
@@ -252,11 +414,3 @@ module.exports.ContentData = function() {
 		// // main.push(subAry);
 		// // console.log('last blo##########################3ssck'+ JSON.stringify(subAry));
 		// // return Full_data;
-
-		Tab1Obj = {};
-		Tab2Obj = {};
-        
-	});
-	
-
-}

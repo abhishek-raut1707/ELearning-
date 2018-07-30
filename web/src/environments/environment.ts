@@ -8,7 +8,7 @@
 
 export const environment = {
   production: false,
-  baseurl: 'http://localhost:3000/api',
+  baseurl: 'http://localhost:3000',
   // baseurl: 'http://192.168.1.51:8070'
   // baseurl: 'http://139.162.231.12:8070',
   //  baseurl: 'http://192.168.1.103:8080',

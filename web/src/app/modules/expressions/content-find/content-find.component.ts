@@ -9,7 +9,7 @@ import { ApiServiceService } from '../../../services/api-service.service';
 export class ContentFindComponent implements OnInit {
 
   contentID = {
-    id: '19562531'
+    name: 'confluence'
   };
   constructor(private apiServ: ApiServiceService) { }
 
@@ -17,7 +17,7 @@ export class ContentFindComponent implements OnInit {
   }
 
   parseContent(event: any) {
-    this.apiServ.getAllExpPageID()
+    this.apiServ.getAllExpPageID(this.contentID)
     .subscribe(data => {
       console.log(data);
     });

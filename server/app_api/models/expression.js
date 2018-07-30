@@ -21,31 +21,60 @@ var expression=new mongoose.Schema({
 
 
 var expression_context=new mongoose.Schema({
-    ExpID:{type:mongoose.Schema.Types.ObjectId, ref:'Expression'},
-    //context_link:String,
-    Meaning_ID:Number,
-    version:{type:Number,default:1},
-    active_flag:{type:Boolean, default:1},
+//     ExpID:{type:mongoose.Schema.Types.ObjectId, ref:'Expression'},
+//     //context_link:String,
+//     Meaning_ID:Number,
+//     // version:{type:Number,default:1},
+//     active_flag:{type:Boolean, default:1},
 
-   flag_history:[{
-     date:{type:Date, default:Date.now},
-     flag:Boolean
-    }],
+//    flag_history:[{
+//      date:{type:Date, default:Date.now},
+//      flag:Boolean
+//     }],
 
-    date:{type:Date, default:Date.now},
-    level:[{name:String}], //Level
+//     date:{type:Date, default:Date.now},
+//     level:[{name:String}], //Level
 
-    popularity:String,
-    meaning:String,
-    context:String,
-    notes: String,
-    HTM:String  , // How to memorize
-    categories:[{text:String}],
+//     popularity:String,
+//     meaning:String,
+//     context:String,
+//     notes: String,
+//     HTM:String  , // How to memorize
+//     categories:[{text:String}],
 
-    examples:[{text:String,link:String}],
-    audio_link:String,
-    tags:[String],
-    futher_suggestion:String  
+//     examples:[{text:String,link:String}],
+//     audio_link:String,
+//     tags:[String],
+//     further_suggestion:String  
+
+
+
+
+ExpID:{type:mongoose.Schema.Types.ObjectId, ref:'Expression'},
+//context_link:String,
+Meaning_ID: String,
+// version:{type:Number,default:1},
+active_flag: String,
+
+flag_history:[{
+ date:{type:Date, default:Date.now},
+ flag:Boolean
+}],
+
+date:{type:Date, default:Date.now},
+level:String, //Level
+
+popularity:String,
+meaning:String,
+context:String,
+notes: String,
+HTM:String  , // How to memorize
+categories:[{text:String}],
+
+examples: String,
+audio_link:String,
+tags:[String],
+further_suggestion:String  
 });
 
 

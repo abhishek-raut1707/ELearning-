@@ -35,16 +35,15 @@ module.exports.addExpression=function(req,res){
 };
 
 
-module.exports.addExpressionFroMConfluence=function(req,res){
+module.exports.addExpressionFroMConfluence=function(contextData, title){
 
-    var title=req.body.title;
-var data=req.body.data;
+	// console.log('Data from confluence ', contextData);
 
-
-
-	Expression.find({name:title},function(err,datac){
+		Expression.find({name:title},function(err,datac){
 			if(err){
-				res.json({'data':"error"});
+				// res.json({'data':"error"});
+				console.log(err);
+				
 			}
 			else{
 				if(datac.length<=0){
@@ -54,57 +53,77 @@ var data=req.body.data;
 				   	exp.name=title;
 					exp.save(function(err,docsId){
 						if(err) 
-						res.json(err);
+						console.log(err);
+						
+						// res.json(err);
 						if(!err){
 							
-console.log("EEEEEEEEEEE IF"+docsId._id);
-						save_cntect(data,docsId._id,res);					
+// console.log("EEEEEEEEEEE IF"+docsId._id);
+					for(var i = 0; i < contextData.length; i++) {
+						var data = contextData[i];
+						save_cntect(data,docsId._id);		
+					}						
+					}else{
 
-					    }
-
-					});						
-				
-
-
-	
-				}
-				else{
-
-					console.log("EEEEEEEEEEE ELSE"+datac[0]._id);
+					// console.log("EEEEEEEEEEE ELSE"+datac[0]._id);
 					
-					save_cntect(data,datac[0]._id,res);		
+					for(var i = 0; i < contextData.length; i++) {
+						var data = contextData.data[i];
+					// Deleted res from save_cntect parameters
+						save_cntect(data,datac[0]._id);	
+					}
 				}
-
+			
 
 
 			
 				//res.json(datac);
-			}
-			
-	})	
-
+			});
 
 	
 
 };
 
-function save_cntect(data,ExpID,res){
-	var expc=new Expression_Context(data);
-	   expc.ExpID=ExpID;
+
+// Deleted res from the save_cntect parameters
+function save_cntect(data,ExpID){
+	
+	var expc = new Expression_Context();
+	expc.ExpID=ExpID;
+	expc.examples = data.examples;
+	expc.level = data.level;
+	expc.further_suggestion = data.further_suggestion;
+	expc.popularity = data.popularity;
+	expc.notes = data.notes;
+	expc.meaning = data.meaning;
+	expc.active_flag = data.active_flag;
+	expc.HTM = data.HTM;
+	expc.Meaning_ID = data.Meaning_ID;
+	   
+	// console.log('expc', expc);
+	
 	expc.save(function(err,docsId){
 		if(err) 
-		res.json(err);
+		console.log(err);
+		
+		// res.json(err);
 		if(!err){
 
-                res.status(200);
-                res.json({
-                "token" : "Expression Context Saved ...."
-                });
+                // res.status(200);
+                // res.json({
+                // "token" : "Expression Context Saved ...."
+				// });
+				
+				console.log('Successfully uploaded data to db');
+				
             }
 
 	});
 
 }
+}
+		});
+	}
 
 
 module.exports.getallExpressionwithContext=function(req,res){
@@ -223,6 +242,6 @@ var dataUp ={flag:flgchek};
 
 
 
-		
+
 };
 

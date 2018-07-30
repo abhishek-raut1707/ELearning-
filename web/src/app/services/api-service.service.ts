@@ -10,8 +10,8 @@ export class ApiServiceService {
   constructor(private _http: HttpClient) { }
 
 
-  getAllExpPageID() {
-    return this._http.get(environment.baseurl + '/getAll');
+  getAllExpPageID(getContent: any) {
+    return this._http.post(environment.baseurl + '/all_expss', getContent);
   }
 
   postUploadImage() {

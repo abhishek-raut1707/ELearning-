@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var config = require('./app_api/config/oauth');
 var FacebookStrategy = require('passport-facebook').Strategy;
-
+var cors = require('cors');
 
 
 // [SH] Bring in the data model
@@ -23,7 +23,7 @@ var routesApi = require('./app_api/routes/index');
 
 var app = express();
 app.use(fileUpload());
-
+app.use(cors());
 
 
 // view engine setup
@@ -44,13 +44,13 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 app.use(passport.initialize());
 
 /*######enable headers#######*/
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-}
-  app.use(allowCrossDomain);
+// var allowCrossDomain = function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     next();
+// }
+//   app.use(allowCrossDomain);
 
   
 /*########enable headers#########*/
@@ -58,7 +58,7 @@ var allowCrossDomain = function(req, res, next) {
 
 
 // [SH] Use the API routes when path starts with /api
-app.use('/api', routesApi);
+app.use('/', routesApi);
 
 
 
